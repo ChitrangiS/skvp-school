@@ -1,0 +1,242 @@
+<!-- gallery.html with image upload and edit features -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery - Shri Kalinga Higher Secondary School, DNK</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item img:hover,
+    .gallery-item img:focus {
+      transform: scale(1.05);
+      outline: none;
+    }
+    .edit-controls {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .edit-controls,
+    .gallery-item:focus-within .edit-controls {
+      opacity: 1;
+    }
+    .edit-btn {
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .edit-btn:hover,
+    .edit-btn:focus {
+      background: rgba(0, 0, 0, 0.85);
+      outline: none;
+    }
+    /* Modal for image preview and edit */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 1rem;
+    }
+    .modal[aria-hidden="false"] {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--background-color);
+      border-radius: var(--border-radius);
+      max-width: 600px;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--primary-color);
+      cursor: pointer;
+      user-select: none;
+    }
+    .modal-close:hover,
+    .modal-close:focus {
+      color: var(--secondary-color);
+      outline: none;
+    }
+    .modal img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .modal label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .modal input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .modal button.save-btn {
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--border-radius);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .modal button.save-btn:hover,
+    .modal button.save-btn:focus {
+      background-color: var(--secondary-color);
+      outline: none;
+    }
+    /* Upload form styling */
+    #uploadForm {
+      margin-top: 1.5rem;
+      border: 2px dashed #ccc;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      user-select: none;
+    }
+    #uploadForm:hover,
+    #uploadForm:focus-within {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+    #uploadInput {
+      display: none;
+    }
+    #uploadLabel {
+      font-weight: 700;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+  </style>
+  <script defer src="gallery-scripts.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar container" role="navigation" aria-label="Primary Navigation">
+      <a href="index.html" class="logo" aria-label="Shri Kalinga Higher Secondary School Home">
+        Shri Kalinga Higher Secondary School, DNK
+      </a>
+      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-menu" id="primary-navigation" role="menu">
+        <li role="none"><a role="menuitem" href="index.html" class="nav-link">Home</a></li>
+        <li role="none"><a role="menuitem" href="about.html" class="nav-link">About Us</a></li>
+        <li role="none"><a role="menuitem" href="academics.html" class="nav-link">Academics</a></li>
+        <li role="none"><a role="menuitem" href="faculty.html" class="nav-link">Faculty</a></li>
+        <li role="none"><a role="menuitem" href="events.html" class="nav-link">Events</a></li>
+        <li role="none"><a role="menuitem" href="gallery.html" class="nav-link active">Gallery</a></li>
+        <li role="none"><a role="menuitem" href="admissions.html" class="nav-link">Admissions</a></li>
+        <li role="none"><a role="menuitem" href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="gallery-content slide-in-left">
+      <h1>Gallery</h1>
+      <p>Memories from various school events, functions, and activities.</p>
+
+      <div id="galleryGrid" class="gallery-grid" aria-live="polite" aria-label="Photo gallery">
+        <!-- Existing or uploaded images will appear here -->
+      </div>
+
+      <form id="uploadForm" tabindex="0" aria-label="Upload new photo">
+        <label for="uploadInput" id="uploadLabel">Click or drag & drop to upload photos</label>
+        <input type="file" id="uploadInput" accept="image/*" multiple aria-describedby="uploadLabel" />
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-links" role="navigation" aria-label="Footer Navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="academics.html">Academics</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <address>
+        <p>Shri Kalinga Higher Secondary School, DNK, Umerkote</p>
+        <p style="color: white;">
+          Phone: +91-9937935952, +91-8018716262, +91-9937308119 |
+          Instagram:
+          <a href="https://www.instagram.com/skvp.ukt/" target="_blank" style="color: white;">@skvp.ukt</a>,
+          <a href="https://www.instagram.com/sri_kalinga_vidyapitha_umerkot/" target="_blank" style="color: white;">@sri_kalinga_vidyapitha_umerkot</a>
+        </p>
+      </address>
+      <p>&copy; 2024 Shri Kalinga Higher Secondary School, DNK. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal for image preview and edit -->
+  <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="modalTitle">Edit Photo</h2>
+      <img id="modalImage" alt="Preview" />
+      <label for="captionInput">Caption / Description</label>
+      <input type="text" id="captionInput" maxlength="100" />
+      <div style="text-align: right;">
+        <button id="saveCaptionBtn" class="save-btn">Save</button>
+        <button id="deleteImageBtn" class="save-btn" style="background-color:#cc3333; margin-left:8px;">Delete</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

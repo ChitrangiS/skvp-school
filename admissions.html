@@ -1,0 +1,95 @@
+<!-- admissions.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admissions - Shri Kalinga Higher Secondary School, DNK</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="scripts.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar container" role="navigation" aria-label="Primary Navigation">
+      <a href="index.html" class="logo" aria-label="Shri Kalinga Higher Secondary School Home">
+        Shri Kalinga Higher Secondary School, DNK
+      </a>
+      <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-menu" id="primary-navigation" role="menu">
+        <li role="none"><a role="menuitem" href="index.html" class="nav-link">Home</a></li>
+        <li role="none"><a role="menuitem" href="about.html" class="nav-link">About Us</a></li>
+        <li role="none"><a role="menuitem" href="academics.html" class="nav-link">Academics</a></li>
+        <li role="none"><a role="menuitem" href="faculty.html" class="nav-link">Faculty</a></li>
+        <li role="none"><a role="menuitem" href="events.html" class="nav-link">Events</a></li>
+        <li role="none"><a role="menuitem" href="gallery.html" class="nav-link">Gallery</a></li>
+        <li role="none"><a role="menuitem" href="admissions.html" class="nav-link active">Admissions</a></li>
+        <li role="none"><a role="menuitem" href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="admissions-content slide-in-left">
+      <h1>Admissions</h1>
+      <p>Welcome to the admission section. Please find below the important information for enrolling your child.</p>
+      <h2>Admission Process</h2>
+      <ol>
+        <li>Visit the school or contact the faculty for admission details.</li>
+        <li>Pay the admission fees to confirm enrollment.</li>
+      </ol>
+      <h2>Important Dates</h2>
+      <ul>
+        <p>Admissions are now open for the 2025-26 session for Classes 1 to 12, as well as Penguin Play School Nursery. Visit the school or contact the faculty for more details.</p>       
+      </ul>
+      <button id="openContactPopup" class="btn btn-primary">Contact Admission Office</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-links" role="navigation" aria-label="Footer Navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="academics.html">Academics</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <address>
+        <p>Shri Kalinga Higher Secondary School, DNK, Umerkote</p>
+        <p style="color: white;">
+        Phone: +91-9937935952, +91-8018716262, +91-9937308119 |
+        Instagram:
+        <a href="https://www.instagram.com/skvp.ukt/" target="_blank" style="color: white;">@skvp.ukt</a>,
+        <a href="https://www.instagram.com/sri_kalinga_vidyapitha_umerkot/" target="_blank" style="color: white;">@sri_kalinga_vidyapitha_umerkot</a>
+        </p>
+      </address>
+      <p>&copy; 2024 Shri Kalinga Higher Secondary School, DNK. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Contact Popup Modal for Admission Query -->
+  <div id="contactPopup" class="modal" role="dialog" aria-modal="true" aria-labelledby="contactPopupTitle" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close contact form">&times;</button>
+      <h2 id="contactPopupTitle">Contact Admission Office</h2>
+      <form id="admissionContactForm" novalidate>
+        <label for="name">Name<span aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" required autocomplete="name" />
+        <label for="email">Email<span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" required autocomplete="email" />
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" />
+        <label for="message">Message<span aria-hidden="true">*</span></label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <p id="formStatus" role="alert" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
